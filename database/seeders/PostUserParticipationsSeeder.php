@@ -5,9 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use DateTime;
 
-class UniversitySeeder extends Seeder
+class PostUserParticipationsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,8 +15,10 @@ class UniversitySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('universities')->insert([
-            'name' => '山形大学'
+        DB::table('post_user_participations')->insert([
+            'user_id' => 1,
+            'post_id' => 1,
+            'role' => 0,
         ]);
     }
 }

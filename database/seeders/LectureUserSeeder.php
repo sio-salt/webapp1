@@ -5,9 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use DateTime;
 
-class FacultySeeder extends Seeder
+class LectureUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,8 +15,10 @@ class FacultySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('faculties')->insert([
-            'name' => '理学部',
+        DB::table('lecture_user')->insert([
+            'lecture_id' => 1,
+            'user_id' => 1,
+            'is_taking_lecture' => 0,
         ]);
     }
 }

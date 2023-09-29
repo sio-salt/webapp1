@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use DateTime;
+use App\Models\Post;
 
-class FacultySeeder extends Seeder
+class PostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,8 +16,6 @@ class FacultySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('faculties')->insert([
-            'name' => '理学部',
-        ]);
+        Post::factory()->count(1)->create();
     }
 }

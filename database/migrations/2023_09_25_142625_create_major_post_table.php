@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('universities', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+        Schema::create('major_post', function (Blueprint $table) {
+            $table->foreignId('major_id')->constrained();
+            $table->foreignId('post_id')->constrained();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('universities');
+        Schema::dropIfExists('major_post');
     }
 };

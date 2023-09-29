@@ -19,6 +19,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'profile',
+        'profile_picture_url',
+        'faculty_id',
+        'major_id',
+        'grade',
+        'lab',
         'email',
         'password',
     ];
@@ -41,4 +47,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function major()
+    {
+        return $this->belongsTo(Majors::class);
+    }
+
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class);
+    }
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
+    }
+
+    public function post_participations()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

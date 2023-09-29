@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('participants', function (Blueprint $table) {
+        Schema::create('post_user_participations', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('posts_id')->constrained();
-            $table->integer('role'); //0: participate  1: participate likely  2: participate as mentor
+            $table->foreignId('post_id')->constrained();
+            $table->integer('role')->unsigined();
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('participants');
+        Schema::dropIfExists('post_user_participations');
     }
 };

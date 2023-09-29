@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lectures', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('university_id')->constrained();
-            $table->foreignId('faculty_id')->constrained();
+        Schema::table('lecture_user', function (Blueprint $table) {
+            $table->primary(['lecture_id', 'user_id']);
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lectures');
+        //
     }
 };

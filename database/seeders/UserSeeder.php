@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class UserSeeder extends Seeder
 {
@@ -15,12 +17,15 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => '山大 太郎',
-            'profile' => 'profile text goes here',
-            'university_id' => 1,
+            'name' => '理学部物理太郎',
+            'profile' => 'シーディングのために入れられた理学部物理選考の太郎です。',
+            'profile_picture_url' => null,
             'faculty_id' => 1,
-            'grade' => 4,
-            ''
+            'major_id' => 1,
+            'grade' => 5,
+            'lab' => null,
+            'email' => 'saltinthedesertyou@gmail.com',
+            'password' => bcrypt('3Sa8la5ga2ta')
         ]);
     }
 }
