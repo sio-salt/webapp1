@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/post', [PostController::class, 'recentPost']); // temporary
+Route::get('/posts',  [PostController::class, 'recentPost']); // temporary
 
 Route::get('/dashboard', function () {
     return view('dashboard');

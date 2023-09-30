@@ -22,6 +22,11 @@ class Post extends Model
         'teacher_welcome',
     ];
 
+    public function getPaginateByLimit (int $limit_count = 10)
+    {
+        return $this->orderBy('created_at', 'DESC')->paginate($limit_count);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -30,6 +35,11 @@ class Post extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+    
+    public function userParticipations()
+    {
+        return $this->hasMany(PostUserParticipation::class);
     }
 
     public function faculty()
