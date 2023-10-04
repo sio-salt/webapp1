@@ -22,14 +22,14 @@ class Post extends Model
         'teacher_welcome',
     ];
 
-    public function getPaginateByLimit (int $limit_count = 10)
+    public function getPaginateByLimit (int $limit_count = 20)
     {
         return $this->orderBy('created_at', 'DESC')->paginate($limit_count);
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function users()
