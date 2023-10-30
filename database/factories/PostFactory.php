@@ -22,7 +22,7 @@ class PostFactory extends Factory
             'user_id' => 1,
             'title' => '場の量子論レポート課題を解く会',
             'lecture_id' => 1,
-            'major_id' => 1,
+            'tag_id' => 1,
             'faculty_id' => 1,
             'start_at' => $this->faker->dateTime,
             'place' => '理学部1号館1階122教室',

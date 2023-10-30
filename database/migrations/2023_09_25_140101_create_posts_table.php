@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
-            $table->foreignId('lecture_id')->constrained();
-            $table->foreignId('major_id')->constrained();
-            $table->foreignId('faculty_id')->constrained();
+            $table->foreignId('lecture_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('tag_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('faculty_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamp('start_at');
             $table->string('place');
             $table->text('body');

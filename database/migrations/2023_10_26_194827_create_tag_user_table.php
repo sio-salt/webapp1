@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('majors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+        Schema::create('tag_user', function (Blueprint $table) {
+            $table->primary(['tag_id', 'user_id']);
+            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->boolean('to_notify');
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('majors');
+        Schema::dropIfExists('tag_user');
     }
 };

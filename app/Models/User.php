@@ -22,7 +22,7 @@ class User extends Authenticatable
         'profile',
         'profile_picture_url',
         'faculty_id',
-        'major_id',
+        'tag_id',
         'grade',
         'lab',
         'email',
@@ -48,9 +48,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function major()
+    public function tags()
     {
-        return $this->belongsTo(Majors::class);
+        return $this->belongsToMany(Tag::class, 'tag_user')->withPivot('to_notify');
     }
 
     public function faculty()
@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Post::class, 'post_user_participations')->withPivot('role');
     }
 
     public function post_participations()

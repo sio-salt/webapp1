@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Major extends Model
+class Tag extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 
     protected $fillable = [
         'name',
@@ -20,6 +22,6 @@ class Major extends Model
 
     public function posts()
     {
-        return $this->belongsToMany(Lecture::class);
+        return $this->belongsToMany(Post::class);
     }
 }

@@ -7,6 +7,8 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/select2.min.js',
+                'resources/js/filter-search.js',
             ],
             refresh: true,
         }),

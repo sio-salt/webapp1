@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MajorSeeder extends Seeder
+class TagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class MajorSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('majors')->insert([
+        DB::table('tags')->insert([
             'name' => '物理',
         ]);
     }

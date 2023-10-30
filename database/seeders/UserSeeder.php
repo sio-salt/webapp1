@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'profile' => 'シーディングのために入れられた理学部物理選考の太郎です。',
             'profile_picture_url' => null,
             'faculty_id' => 1,
-            'major_id' => 1,
+            'tag_id' => 1,
             'grade' => 5,
             'lab' => null,
             'email' => 'saltinthedesertyou@gmail.com',

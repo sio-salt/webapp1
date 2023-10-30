@@ -24,14 +24,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             FacultySeeder::class,
-            MajorSeeder::class,
+            TagSeeder::class,
             UserSeeder::class,
+            TagUserSeeder::class,
             LectureSeeder::class,
             LectureUserSeeder::class,
             PostSeeder::class,
-            PostUserParticipations::class,
-            LecturePost::class,
-            MajorPost::class,
+            PostUserParticipationsSeeder::class,
+            LecturePostSeeder::class,
+            PostTagSeeder::class,
         ]);
     }
 }

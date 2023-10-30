@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class LecturePost extends Seeder
+class PostTagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,8 +15,8 @@ class LecturePost extends Seeder
      */
     public function run()
     {
-        DB::table('lecture_post')->insert([
-            'lecture_id' => 1,
+        DB::table('post_tag')->insert([
+            'tag_id' => 1,
             'post_id' => 1,
         ]);
     }

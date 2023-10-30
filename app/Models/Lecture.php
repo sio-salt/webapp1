@@ -9,6 +9,8 @@ class Lecture extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'faculty_id',

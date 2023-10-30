@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MajorPost extends Seeder
+class LecturePostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,8 +15,8 @@ class MajorPost extends Seeder
      */
     public function run()
     {
-        DB::table('major_post')->insert([
-            'major_id' => 1,
+        DB::table('lecture_post')->insert([
+            'lecture_id' => 1,
             'post_id' => 1,
         ]);
     }

@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('profile')->nullable();
             $table->text('profile_picture_url')->nullable();
-            $table->foreignId('faculty_id')->constrained();
-            $table->foreignId('major_id')->constrained();
-            $table->integer('grade')->unsigned();
+            $table->foreignId('faculty_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('tag_id')->nullable()->constrained()->onDelete('cascade');
+            $table->integer('grade')->nullable()->unsigned();
             $table->string('lab')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

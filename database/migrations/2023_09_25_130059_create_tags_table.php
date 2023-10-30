@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('major_post', function (Blueprint $table) {
-            $table->primary(['post_id', 'major_id']);
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
         });
     }
 
@@ -25,8 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('major_post', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('tags');
     }
 };
