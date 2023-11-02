@@ -186,6 +186,8 @@ return [
          * Package Service Providers...
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        // 'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider' => env('APP_ENV') !== 'production',
+
 
         /*
          * Application Service Providers...
