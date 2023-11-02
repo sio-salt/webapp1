@@ -16,7 +16,7 @@ class LecturePostSeeder extends Seeder
     public function run()
     {
         DB::table('lecture_post')->insert([
-            'lecture_id' => 1,
+            'lecture_id' => 948,
             'post_id' => 1,
         ]);
     }

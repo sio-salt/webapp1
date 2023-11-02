@@ -21,6 +21,7 @@ Route::get('/posts', [PostController::class, 'recentPost'])->name('recent_post')
 Route::get('/posts/search', [PostController::class, 'tagSearch'])->name('tag_search');
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
+// Route::controller(PostController::class)->middleware(['verified'])->group(function(){
     Route::get('/posts/create', 'create')->name('posts.create');
     Route::post('/posts', 'store');
     Route::get('/posts/{post}/edit', 'editPost')->name('edit_post');
@@ -47,6 +48,7 @@ Route::get('/help', function () {
 
 
 Route::middleware('auth')->group(function () {
+// Route::middleware('verified')->group(function () {
     // Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
