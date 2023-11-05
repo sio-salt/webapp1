@@ -30,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
         \URL::forceScheme('https');
         $this->app['request']->server->set('HTTPS', 'on');
         // Paginator::defaultView('my-pagination.blade.php');
+        Schema::defaultStringLength(191);
     }
 }
