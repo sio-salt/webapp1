@@ -8,22 +8,22 @@
                         <!--@csrf-->
                         
                         <!-- lectures Select-Box -->
-                        <div class="mt-4 grid grid-cols-12 gap-2">
-                            <label for="lectures" class="col-span-6">{{ __('Lecture') }}</label>
-                            <label for="lecsearchbox" class="col-span-6">{{ __('Filtering') }}</label>
+                        <div class="mt-4 grid grid-cols-24 gap-2">
+                            <label for="lectures" class="col-span-12">{{ __('Lecture') }}</label>
+                            <label for="lecsearchbox" class="col-span-12">{{ __('Filtering') }}</label>
                             <!--<select name="post[lecture_id]" id="lectures" class="col-span-6 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>-->
-                            <select name="lecture" id="lectures" class="col-span-6 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
-                            <input type="text" id="lecsearchbox" class="col-span-4 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
-                            <input type="button" id="lecSearch" value="{{ __('Filter') }}" class="col-span-2 btn py-2 flex-initial text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <select name="lecture" id="lectures" class="col-span-12 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
+                            <input type="text" id="lecsearchbox" class="col-span-7 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
+                            <input type="button" id="lecSearch" value="{{ __('Filter') }}" class="col-span-5 btn py-2 flex-initial text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         </div>
                         
-                        <div class="mt-4 grid grid-cols-12 gap-2">
-                            <label for="tags" class="col-span-6">{{ __('Tags') }}</label>
-                            <label for="tagsearchbox" class="col-span-6">{{ __('Filtering') }}</label>
+                        <div class="mt-4 grid grid-cols-24 gap-2">
+                            <label for="tags" class="col-span-12">{{ __('Tags') }}</label>
+                            <label for="tagsearchbox" class="col-span-12">{{ __('Filtering') }}</label>
                             <!--<select name="post[tag_id]" id="tags" class="col-span-6 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>-->
-                            <select name="tag" id="tags" class="col-span-6 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
-                            <input type="text" id="tagsearchbox" class="col-span-4 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
-                            <input type="button" id="tagSearch" value="{{ __('Filter') }}" class="col-span-2 btn py-2 flex-initial text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <select name="tag" id="tags" class="col-span-12 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
+                            <input type="text" id="tagsearchbox" class="col-span-7 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
+                            <input type="button" id="tagSearch" value="{{ __('Filter') }}" class="col-span-5 btn py-2 flex-initial text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         </div>
                         
                         <div class="content-center">
@@ -31,21 +31,20 @@
                                 <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                 </svg>
-                                <span class="sm:inline hidden">{{ __('Search') }}</span>
+                                <span class="inline">{{ __('Search') }}</span>
                             </button>
                         </div>
-                        
-                    </div>
+                    </form>
                 </div>
             </div>
-        </form>
-    <div class='py-10 max-w-4xl mx-auto sm:px-6 lg:px-8 grid gap-y-2'>
-        @if ($posts->count())
-            @foreach ($posts as $post)
-                <x-post-card :post="$post"/>
-            @endforeach
-        @endif
-    </div>
+        </div>
+        <div class='py-10 max-w-4xl mx-auto sm:px-6 lg:px-8 grid gap-y-2'>
+            @if ($posts->count())
+                @foreach ($posts as $post)
+                    <x-post-card :post="$post"/>
+                @endforeach
+            @endif
+        </div>
     </div>
     <script>
         // 選択肢・Optionの作成と追加を実行する関数
