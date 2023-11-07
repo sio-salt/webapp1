@@ -48,7 +48,6 @@
     </div>
     </div>
     <script>
-        
         // 選択肢・Optionの作成と追加を実行する関数
         function OptionCreator (selectPrefBox, optionList) {
             
@@ -142,43 +141,5 @@
             searchBtn.onclick = () => SelectCreator(selectPrefBox, optionCustom, searchResult, true);
         });
         
-        
-        // textareaからの入力をtagOptionに追加する
-        const tagTextarea = document.getElementById('free_tag');
-        const tagAddBtn = document.getElementById('tag_add_btn');
-        const existAlert = document.getElementById('exist_alert');
-        const orignalTagLength = tagOption.length;
-        
-        tagAddBtn.onclick = (event) => {
-            event.preventDefault(); // ページのリロードを防ぐ
-            
-            const value = tagTextarea.value;
-            const existingOption = tagOption.find(opt => opt.value === value);
-            
-            if (existingOption) {
-                // 既存のオプションが見つかった場合、それを選択状態にする
-                const tagSearchBox = document.getElementById('tagsearchbox');
-                tagSearchBox.value = "";
-                const selectPrefBox2 = document.getElementById('tags');
-                selectPrefBox2.value = existingOption.id;
-                
-                existAlert.textContent = "既に存在します";
-            }
-            else {
-                while (tagOption.length > orignalTagLength) {
-                    tagOption.pop();
-                }
-                
-                const id = tagOption.length + 1; // 新しいIDを生成
-                tagOption.push({id: id, value: value}); // tagOptionに新しいデータを追加
-            
-                // 2つ目のselectタグを更新し、新しく追加したオプションを選択状態にする
-                const selectPrefBox2 = document.getElementById('tags');
-                SelectCreator(selectPrefBox2, tagOption, [], false);
-                selectPrefBox2.value = id;
-                
-                existAlert.textContent = "";
-            }
-        };
     </script>
 </x-app-layout>

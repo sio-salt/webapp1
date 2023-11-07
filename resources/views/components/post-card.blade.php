@@ -47,10 +47,13 @@
     <h2 class="text-xl font-semibold mb-2 text-blue-900 pl-8">{{ $post->title }}</h2>
     <div class="mb-4 pl-8">
         @foreach ( $post->lectures as $lecture )
-            <a href="{{ route('tag_search', ['lecture' => $lecture->name]) }}" class="inline-block bg-blue-200 text-indigo-900 px-2 py-1 rounded-full text-sm">#{{ $lecture->name }}</a>
+            <a href="{{ route('tag_search', ['lecture' => $lecture->name]) }}" 
+                class="inline-block bg-blue-200 hover:bg-blue-300 text-indigo-900 px-2 py-1 rounded-full text-sm active:bg-blue-400 focus:outline-none focus:ring :ring-indigo-500">
+                #{{ $lecture->name }}
+            </a>
         @endforeach
         @foreach ( $post->tags as $tag )
-            <a href="{{ route('tag_search', ['tag' => $tag->name]) }}" class="inline-block bg-blue-200 text-indigo-900 px-2 py-1 rounded-full text-sm">#{{ $tag->name }}</a>
+            <a href="{{ route('tag_search', ['tag' => $tag->name]) }}" class="inline-block bg-blue-200 hover:bg-blue-300 text-indigo-900 px-2 py-1 rounded-full text-sm active:bg-blue-400 focus:outline-none focus:ring :ring-indigo-500">#{{ $tag->name }}</a>
         @endforeach
     </div>
     <div class="mb-4 pl-12">
@@ -66,18 +69,19 @@
     </div>
     <p class="mb-6 text-black pl-8">{{ $post->body }}</p>
     {{--<img class="mb-6 rounded object-scale-down h-64 w-full" src="{{ $post->image_url }}">--}}
-    <div class="flex items-center justify-center space-x-16">
+    <!--<div class="flex flex-row items-center justify-center space-x-16">-->
+    <div class="flex flex-row items-center justify-around space-x-4">
         @if ($post->is_this_role_checked_by_auth_user(0))
             <form action="{{ route('unparticipate', $post) }}" method="post">
                 @csrf
                 <input type="hidden" name="role" value=0 />
-                <button type="submit" class="btn px-4 py-1 rounded bg-lime-600 text-white border-4 border-sky-400">参加します!   {{ $post->participations['participate'] }}</button>
+                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-lime-600 hover:bg-lime-700 text-white border-4 border-blue-400 active:bg-lime-800 focus:outline-none focus:border-blue-100">参加します! &nbsp;&nbsp; {{ $post->participations['participate'] }}</button>
             </form>
         @else
             <form action="{{ route('participate', $post) }}" method="post">
                 @csrf
                 <input type="hidden" name="role" value=0 />
-                <button type="submit" class="btn px-4 py-1 rounded bg-lime-600 text-white border border-black">参加します!   {{ $post->participations['participate'] }}</button>
+                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-lime-600 hover:bg-lime-700 text-white border border-black active:bg-lime-800 focus:outline-none focus:ring focus:ring-blue-400">参加します! &nbsp;&nbsp; {{ $post->participations['participate'] }}</button>
             </form>
         @endif
             
@@ -85,13 +89,13 @@
             <form action="{{ route('unparticipate', $post) }}" method="post">
                 @csrf
                 <input type="hidden" name="role" value=1 />
-                <button type="submit" class="btn px-4 py-1 rounded bg-green-500 text-white border-4 border-sky-600">参加するかも   {{ $post->participations['participate_likely'] }}</button>
+                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-green-500 hover:bg-green-600 text-white border-4 border-blue-400 active:bg-green-700 focus:outline-none focus:border-blue-100">参加するかも &nbsp;&nbsp; {{ $post->participations['participate_likely'] }}</button>
             </form>
         @else
             <form action="{{ route('participate', $post) }}" method="post">
                 @csrf
                 <input type="hidden" name="role" value=1 />
-                <button type="submit" class="btn px-4 py-1 rounded bg-green-500 text-white border border-black">参加するかも   {{ $post->participations['participate_likely'] }}</button>
+                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-green-500 hover:bg-green-600 text-white border border-black active:bg-green-700 focus:outline-none focus:ring focus:ring-blue-400">参加するかも &nbsp;&nbsp; {{ $post->participations['participate_likely'] }}</button>
             </form>
         @endif
             
@@ -99,13 +103,13 @@
             <form action="{{ route('unparticipate', $post) }}" method="post">
                 @csrf
                 <input type="hidden" name="role" value=2 />
-                <button type="submit" class="btn px-4 py-1 rounded bg-pink-600 text-white border-4 border-sky-600">メンターとして参加   {{ $post->participations['participate_as_mentor'] }}</button>
+                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-pink-600 hover:bg-pink-700 text-white border-4 border-blue-300 active:bg-pink-800 focus:outline-none focus:border-blue-100">メンターとして参加 &nbsp;&nbsp; {{ $post->participations['participate_as_mentor'] }}</button>
             </form>
         @else
             <form action="{{ route('participate', $post) }}" method="post">
                 @csrf
                 <input type="hidden" name="role" value=2 />
-                <button type="submit" class="btn px-4 py-1 rounded bg-pink-600 text-white border border-blue">メンターとして参加   {{ $post->participations['participate_as_mentor'] }}</button>
+                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-pink-600 hover:bg-pink-700 text-white border border-black active:bg-pink-800 focus:outline-none focus:ring focus:ring-blue-300">メンターとして参加 &nbsp;&nbsp; {{ $post->participations['participate_as_mentor'] }}</button>
             </form>
         @endif
         </form>
