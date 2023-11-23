@@ -5,6 +5,7 @@ ym-study-group ・ 山形大学 勉強会 掲示板</a></h1>
 
 大学の勉強って難しいのにみんなで取り組むことって少ないですよね。自由参加の勉強会を開いて学生間で教え合いませんか?
 
+**Link** ： https://ym-study-group-4371b65c8ce9.herokuapp.com/
 
 ## :star: Main Feature
 - 投稿の閲覧
@@ -20,7 +21,10 @@ ym-study-group ・ 山形大学 勉強会 掲示板</a></h1>
 
 
 ### :desktop_computer: PC
-<img width="960" alt="スクリーンショット 2023-11-23 231533" src="https://github.com/sio-salt/ym-study-group/assets/105919668/464c1640-006d-4584-b949-d4dc000f483d">
+<img width="960" alt="スクリーンショット 2023-11-23 231533" src="https://github.com/sio-salt/ym-study-group/assets/105919668/464c1640-006d-4584-b949-d4dc000f483d">  
+<br></br>
+<img width="642" alt="image" src="https://github.com/sio-salt/ym-study-group/assets/105919668/dc0cb01f-fcec-4a68-b0a4-bef212d0c41b">
+
 
 ### :iphone: Smartphone
 <img width="300" alt="IMG_0800" src="https://github.com/sio-salt/ym-study-group/assets/105919668/6f220c27-0970-477e-be91-a086cf10f031">
@@ -41,3 +45,4 @@ ym-study-group ・ 山形大学 勉強会 掲示板</a></h1>
 - 投稿スレッドへのコメント機能。
 - アカウントへのDM機能。
 - 気になる講義の登録、その講義に関する投稿時の通知。
+- 年度更新時に大学で追加、名称変更された講義の自動DB追加。
