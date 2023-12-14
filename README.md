@@ -34,8 +34,7 @@ ym-study-group ・ 山形大学 勉強会 掲示板</a></h1>
 
 ## 使用技術
 **フロントエンド**
-
-‐ HTML
+- HTML
 - Tailwind CSS
 - JavaScript
 
