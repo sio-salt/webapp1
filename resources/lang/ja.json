@@ -27,5 +27,21 @@
   "Filter": "絞り込み",
   "Edit": "編集",
   "Delete": "削除  ",
-  "Tag Search Page": "タグ検索ページ"
+  "Tag Search Page": "タグ検索ページ",
+  "Profile Information": "プロフィール情報",
+  "Update your account's profile information and email address.": "アカウントのプロフィール情報・メールアドレスのアップデート",
+  "Name": "名前",
+  "Save": "保存",
+  "Your email address is unverified.": "メールアドレスが認証されていません。",
+  "Click here to re-send the verification email.": "クリックして確認メールを再送信してください。",
+  "A new verification link has been sent to your email address.": "新しい確認リンクをメールアドレスに送信しました。",
+  "Update Password": "パスワードのアップデート",
+  "Current Password": "現在のパスワード",
+  "New Password": "新しいパスワード",
+  "Confirm Password": "パスワードの確認",
+  "Delete Account": "アカウントの削除",
+  "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.": "アカウントが削除されると、そのリソースとデータはすべて完全に削除されます。アカウントを削除する前に、保持したいデータや情報をダウンロードしてください。",
+  "Are you sure you want to delete your account?": "本当にアカウントを削除してもよろしいですか?",
+  "Password": "パスワード",
+  "Cancel": "キャンセル"
 }
