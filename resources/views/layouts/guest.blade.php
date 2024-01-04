@@ -28,10 +28,20 @@
             @endif
 
             <div class="min-h-screen flex flex-col sm:justify-center items-center pt-4 sm:pt-0 bg-gray-100">
+                
                 <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                     {{ $slot }}
                 </div>
+                
+                <!-- Test Account -->
+                <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                    <h2 class="font-bold">Test Account</h2>
+                    <p>{{ __('email') }}    : test@gmail.com</p>
+                    <p>{{ __('Password') }} : 123456789</p>
+                </div>
             </div>
+            
+            
         </div>
             <!--<div>-->
             <!--    <a href="/">-->
