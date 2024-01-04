@@ -66,7 +66,7 @@
                         </div>
                         
                         <div class="mt-4 grid grid-cols-24 gap-2">
-                            <label for="tags" class="col-span-12">{{ __('Tags') }}</label>
+                            <label for="tags" class="col-span-12">{{ __('Tags (optional)') }}</label>
                             <label for="tagsearchbox" class="col-span-12">{{ __('Filtering') }}</label>
                             <select name="post[tag_id]" id="tags" class="col-span-12 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
                             <input type="text" id="tagsearchbox" placeholder="e.g. 物理" class="col-span-7 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
