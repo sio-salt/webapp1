@@ -16,10 +16,10 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                             </svg>
-                        </button>    
+                        </button>
                         
                         <!-- 編集・削除 Dropdown menu -->
-                        <div x-show="isOpen" 
+                        <div x-show="isOpen"
                             @click.away="isOpen = false"
                             x-transition:enter="transition ease-out duration-100"
                             x-transition:enter-start="opacity-0 scale-90"
@@ -41,8 +41,10 @@
             @endauth
         </div>
     </div>
-    
+
+    <!--タイトル表示-->
     <h2 class="text-xl font-semibold mb-2 text-blue-900 pl-8">{{ $post->title }}</h2>
+    <!--タグの表示-->
     <div class="mb-4 pl-8">
         @foreach ( $post->lectures as $lecture )
             <a href="{{ route('tag_search', ['lecture' => $lecture->name]) }}" 
