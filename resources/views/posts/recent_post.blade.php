@@ -21,50 +21,5 @@
                 document.getElementById(`form_${id}`).submit();
             }
         }
-        
-        
-        
-        
-        // 仮
-        function participate(post_id, role) {
-            $.ajax({
-               headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                },
-                //url: "/posts/" + `${post_id}` + "/participate" + "?role=" + role,
-                url: `/posts/${post_id}/participate`,
-                type: "GET",
-                data: {
-                    role: role
-                }
-            })
-                .done(function (data, status, xhr) {
-                console.log(data);
-            })
-                .fail(function (xhr, status, error) {
-                console.log();
-            });
-        }
-        
-        function unparticipate(post_id, role) {
-            $.ajax({
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                },
-                url: `/posts/${post_id}/unparticipate`,
-                type: "GET",
-                data: {
-                    role: role
-                }
-            })
-                .done(function (data, status, xhr) {
-                    console.log(data);
-                })
-                .fail(function (xhr, status, error) {
-                    console.log();
-                });
-        }
-        
-        
     </script>
 </x-app-layout>
