@@ -9,9 +9,9 @@
                 </div>
 
                 <!-- Settings Dropdown -->
-                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <div class="flex ml-6 items-center">
                     <div class="flex gap-x-4 space-x-1">
-                        <a href="{{ route('help') }}" class="flex px-1.5 py-1 bg-white text-black rounded border border-black">ⓘ</a>
+                        <!--<a href="{{ route('help') }}" class="flex px-1.5 py-1 bg-white text-black rounded border border-black">ⓘ</a>-->
                         
                         @guest
                             @if (request()->routeIs('register'))

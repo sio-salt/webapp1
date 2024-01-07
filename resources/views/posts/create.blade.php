@@ -1,4 +1,5 @@
 <x-app-layout>
+    <!--ヘッダーバナーをつけるか否かでコメントアウト-->
     {{--
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -22,7 +23,7 @@
                             placeholder="～講義の～レポートを解く会" >{{ old('post.title') }}</textarea>
                             
                             @error('post.title')
-                            <div class="text-red-500 text-sm mt-2">
+                            <div class="text-red-500 text-sm mt-1">
                                 {{ $message }}
                             </div>
                             @enderror
@@ -46,7 +47,7 @@
                             placeholder="～棟～番教室">{{ old('post.place') }}</textarea>
                             
                             @error('post.place')
-                            <div class="text-red-500 text-sm mt-2">
+                            <div class="text-red-500 text-sm mt-1">
                                 {{ $message }}
                             </div>
                             @enderror
@@ -55,30 +56,26 @@
                         
                         
                         <!-- lectures Select-Box -->
-                        <div class="mt-4 grid grid-cols-12 gap-2">
-                            <label for="lectures" class="col-span-6">{{ __('Lecture') }}</label>
-                            <label for="lecsearchbox" class="col-span-6">{{ __('Filtering') }}</label>
-                            <select name="post[lecture_id]" id="lectures" class="col-span-6 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
-                            <input type="text" id="lecsearchbox" class="col-span-4 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
-                            <input type="button" id="lecSearch" value="{{ __('Filter') }}" 
-                                class="col-span-2 btn py-2 flex-initial text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <div class="mt-4 grid grid-cols-24 gap-2">
+                            <label for="lectures" class="col-span-12">{{ __('Lecture') }}</label>
+                            <label for="lecsearchbox" class="col-span-12">{{ __('Filtering') }}</label>
+                            <select name="post[lecture_id]" id="lectures" class="col-span-12 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
+                            <input type="text" id="lecsearchbox" placeholder="e.g. 量子" class="col-span-7 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
+                            <input type="button" id="lecSearch" value="{{ __('Filter') }}"
+                                class="col-span-5 btn py-2 flex-initial text-sm {{--hidden sm:block--}} font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         </div>
                         
-                        <div class="mt-4 grid grid-cols-12 gap-2">
-                            <label for="tags" class="col-span-6">{{ __('Tags') }}</label>
-                            <label for="tagsearchbox" class="col-span-6">{{ __('Filtering') }}</label>
-                            <select name="post[tag_id]" id="tags" class="col-span-6 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
-                            <input type="text" id="tagsearchbox" class="col-span-4 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
+                        <div class="mt-4 grid grid-cols-24 gap-2">
+                            <label for="tags" class="col-span-12">{{ __('Tags (optional)') }}</label>
+                            <label for="tagsearchbox" class="col-span-12">{{ __('Filtering') }}</label>
+                            <select name="post[tag_id]" id="tags" class="col-span-12 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
+                            <input type="text" id="tagsearchbox" placeholder="e.g. 物理" class="col-span-7 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
                             <input type="button" id="tagSearch" value="{{ __('Filter') }}" 
-                                class="col-span-2 btn py-2 flex-initial text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                class="col-span-5 btn py-2 flex-initial text-sm {{--hidden sm:block--}} font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         </div>
                         
                         <div class="mt-4 grid grid-cols-12 gap-2">
-                            {{--
-                            <label for="free_tag" class="col-span-10">{{ __('Free Tag') }}</label>
-                            <label for="tag_add_btn" class="col-span-2">{{ __('Tag Add') }}</label>
-                            --}}
-                            <textarea name="tag[name]" id="free_tag" cols="30" rows="1" placeholder="{{ __('Free Tag') }}" class="col-span-10 rounded-lg border-2 bg-gray-100 @error('tag') border-red-500 @enderror"></textarea>
+                            <textarea name="tag[name]" id="free_tag" cols="30" rows="1" placeholder="{{ __('Add Free Tag (optional)     e.g. 量子化学') }}" class="col-span-10 rounded-lg border-2 bg-gray-100 @error('tag') border-red-500 @enderror"></textarea>
                             <button id="tag_add_btn" 
                                 class="col-span-2 btn py-2 flex-initial text-sm font-medium text-white bg-gray-500 rounded-lg border border-gray-700 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ __('Add') }}</button>
                             <p id="exist_alert" class="col-span-12 text-red-500 text-sm mt-1"></p>
@@ -98,7 +95,7 @@
                           placeholder="今回のレポートは～です!">{{ old('post.body') }}</textarea>
                           
                           @error('post.body')
-                          <div class="text-red-500 text-sm mt-2">
+                          <div class="text-red-500 text-sm mt-1 mb-2">
                             {{ $message }}
                           </div>
                           @enderror
@@ -111,7 +108,7 @@
                         </label>
                         
                         <div class="mt-4">
-                            <input type="submit" value="{{ __('Submit') }}" class="btn bg-blue-500 rounded font-medium px-4 py-2 text-white"/>
+                            <input type="submit" value="{{ __('Submit') }}" class="btn bg-blue-500 rounded font-medium px-4 py-2 text-white hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring :ring-indigo-500"/>
                         </div>
                     </form>
                 </div>

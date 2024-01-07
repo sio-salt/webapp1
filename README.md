@@ -1,66 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 align="left"><a href="https://ym-study-group-4371b65c8ce9.herokuapp.com/"> 
+ym-study-group ・ 山形大学 勉強会 掲示板</a></h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Online bulletin board exclusively for Yamagata University students to host study groups
 
-## About Laravel
+大学の勉強って難しいのにみんなで取り組むことって少ないですよね。自由参加の勉強会を開いて学生間で教え合いませんか?
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Link** ： https://ym-study-group-4371b65c8ce9.herokuapp.com/
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### :desktop_computer: PC
+<img width="960" alt="スクリーンショット 2023-11-23 231533" src="https://github.com/sio-salt/ym-study-group/assets/105919668/464c1640-006d-4584-b949-d4dc000f483d">  
+<br></br>
+<img width="642" alt="image" src="https://github.com/sio-salt/ym-study-group/assets/105919668/dc0cb01f-fcec-4a68-b0a4-bef212d0c41b">
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### :iphone: Smartphone
+<img width="300" alt="IMG_0800" src="https://github.com/sio-salt/ym-study-group/assets/105919668/6f220c27-0970-477e-be91-a086cf10f031">
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## :star: Main Feature
+- 投稿の閲覧
+    - ログインなしに開かれている勉強会をチェックできます。
+- 投稿のタグ検索
+    - 気になる講義やジャンルの投稿に絞り込んで表示できます。
+    - タグ検索ページ、もしくはタグのクリックから絞り込み検索。
+- 新規投稿 （ログイン必須）
+    - タイトル、勉強会開始時刻、実施会場、講義タグ、フリータグ、コメントを付けて投稿できます。
+    - 講義タグはすでに登録してある山形大学のほぼ全ての講義から選択できます。
+    - 投稿後に編集と削除が可能です。
+- 参加表明 （ログイン必須）
+    - 投稿の参加ボタンを押してホストに参加意思を表明できます。
+- ページネーション
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+## 使用技術
+**フロントエンド**
+- HTML
+- Tailwind CSS
+- JavaScript
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+**バックエンド**
+- PHP 8.2.12
+- Laravel 9.52.16
+- JawsDB MySQL (本番環境)
+- MariaDB MySQL (開発環境)
+- composer
 
-## Contributing
+**インフラ**
+- AWS (EC2, IAM) (開発環境)
+- HEROKU
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**その他**
+- Git / GitHub
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## ER図
+![lev成果物ER図 drawio (1)](https://github.com/sio-salt/ym-study-group/assets/105919668/292c94a8-3fcd-4ab5-8b52-a79f9353c563)
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## アプリケーション概要・作成背景
+ このアプリケーションは特定の講義や分野について勉強する際に、自由参加の勉強会として場所と時間、勉強内容を含めて投稿をすることで生徒間で勉強を教え合う文化を創生することを目指したものです。山形大学の学生向けに特化しており、大学の全講義をデータベースに登録してあります。
 
-## License
+ 大学では高校までのようにクラスが無いため、自分の友人グループ以外とは関係が希薄で、生徒間で勉強を教え合う文化はあまりありません。しかし、大学の講義内容は高度であり、成績の良い人から教えてもらうことが非常に助けになります。そこで、自分が大学で特定の勉強をしているときにそれを自由参加の勉強会として掲示板に投稿するアプリケーションを作成すれば、友人グループで固まることなく広く生徒間で勉強を助け合う文化を作れるのではないかと考えました。
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## Author
+- 加藤 勇有
+- 山形大学理工学研究科
+- saltinthedesertyou@gmail.com
+
+
+## Future Plans
+- アカウントページの充実化。
+- Google、X（旧Twitter）等を用いたログイン。
+- ヘルプページの作成。
+- 参加表明ボタンの非同期通信化。
+- 画像付き投稿機能。
+- 勉強会開始時刻での空き教室のサジェスト。
+- 現在、過去に受けた講義の登録と学期末の自動変更。
+- 投稿スレッドへのコメント機能。
+- アカウントへのDM機能。
+- 気になる講義の登録、その講義に関する投稿時の通知。
+- 年度更新時に大学で追加、名称変更された講義の自動DB追加。
+- 勉強会の参加記録に応じたポイント付与。

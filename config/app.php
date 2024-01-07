@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', '山形大学勉強会掲示板'),
 
     /*
     |--------------------------------------------------------------------------
@@ -186,6 +186,8 @@ return [
          * Package Service Providers...
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        // 'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider' => env('APP_ENV') !== 'production',
+
 
         /*
          * Application Service Providers...

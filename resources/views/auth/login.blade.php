@@ -4,6 +4,7 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
+        
 
         <!-- Email Address -->
         <div>
@@ -44,4 +45,5 @@
             </x-primary-button>
         </div>
     </form>
+    
 </x-guest-layout>
