@@ -26,6 +26,18 @@ class PostController extends Controller
     }
     
     
+    public function num_participations($post)
+    {
+        // postに紐づいたそれぞれの役割の人が何人いるかを数える
+        $participations = array('participate' => 0, 'participate_likely' => 0, 'participate_as_mentor' => 0);
+        $participations['participate'] = $post->userParticipations->where('role', 0)->count();
+        $participations['participate_likely'] = $post->userParticipations->where('role', 1)->count();
+        $participations['participate_as_mentor'] = $post->userParticipations->where('role', 2)->count();
+        
+        return $participations;
+    }
+    
+    
     public function recentPost(Post $post)
     {
         $posts = $post->getPaginateByLimit();
@@ -34,13 +46,8 @@ class PostController extends Controller
             // 各ポストの開始日時をフォーマット
             $post->start_at = Carbon::parse($post->start_at)->isoFormat('M月D日(dd) H:mm');
             
-            // それぞれの役割の人が何人いるかを数える
-            $participations = array('participate' => 0, 'participate_likely' => 0, 'participate_as_mentor' => 0);
-            $participations['participate'] = $post->userParticipations->where('role', 0)->count();
-            $participations['participate_likely'] = $post->userParticipations->where('role', 1)->count();
-            $participations['participate_as_mentor'] = $post->userParticipations->where('role', 2)->count();
             // 各postに$participations配列を追加
-            $post->participations = $participations;
+            $post->participations = $this->num_participations($post);
         }
     
         // index bladeに取得したデータを渡す
@@ -64,13 +71,8 @@ class PostController extends Controller
                 // 各ポストの開始日時をフォーマット
                 $post->start_at = Carbon::parse($post->start_at)->isoFormat('M月D日(dd) H:mm');
                 
-                // それぞれの役割の人が何人いるかを数える
-                $participations = array('participate' => 0, 'participate_likely' => 0, 'participate_as_mentor' => 0);
-                $participations['participate'] = $post->userParticipations->where('role', 0)->count();
-                $participations['participate_likely'] = $post->userParticipations->where('role', 1)->count();
-                $participations['participate_as_mentor'] = $post->userParticipations->where('role', 2)->count();
                 // 各postに$participations配列を追加
-                $post->participations = $participations;
+                $post->participations = $this->num_participations($post);
             }
         }
         
@@ -186,18 +188,72 @@ class PostController extends Controller
         ]);
     }
     
-    public function participate (Post $post, Request $request) {
-        $user = auth()->user();
-        $post->participate_as_role($request->input('role'));
-        // dd($request->query('page'));
-        // return redirect('/posts');
-        return redirect(url()->previous() . http_build_query(request()->query()));
-    }
     
-    public function unparticipate (Post $post, Request $request) {
+    public function toggleParticipation (Post $post, Request $request)
+    {
         $user = auth()->user();
-        $post->unparticipate($request->input('role'));
-        return redirect('/posts');
+        $post_id = $request->post_id; // jqueryから送られた投稿idの取得
+        $role = intval($request->role);       // jqueryから送られたrole(どのボタンか)の取得
+        $which_checked = [];
+        for ($i = 0; $i < 3; $i++) {
+            $which_checked[$i] = $post->is_this_role_checked_by_auth_user($i);
+        }
+        
+        if ($which_checked[$role]) {
+            
+            $post->unparticipate($role);   // DB更新
+            $post_partisipations = $this->num_participations($post);
+            $post->participations = $post_partisipations;
+            
+            return response()->json([
+                'new_participation_counts' => $post_partisipations,
+                'role' => $role,
+                'which_checked' => $which_checked,
+            ]);
+        }
+        else {
+            
+            $post->participate_as_role($role);   // DB 更新
+            $post_partisipations = $this->num_participations($post);
+            $post->participations = $post_partisipations;
+            
+            return response()->json([
+                'new_participation_counts' => $post_partisipations,
+                'role' => $role,
+                'which_checked' => $which_checked,
+            ]);
+        }
+    }
+
+    public function participate (Post $post, Request $request)
+    {
+        $user = auth()->user();
+        $post_id = $request->post_id; // jqueryから送られた投稿idの取得
+        $role = intval($request->role);       // jqueryから送られたrole(どのボタンか)の取得
+        $post->participate_as_role($role);   // DB 更新
+        $post_partisipations = $this->num_participations($post);
+        $post->participations = $post_partisipations;
+        $mapping = array(0 => 'participate', 1 => 'participate_likely', 2 => 'participate_as_mentor');
+        return response()->json([
+            'new_participation_count' => $post_partisipations[$mapping[$role]],
+            'role' => $role,
+        ]);
+    }
+
+    public function unparticipate (Post $post, Request $request)
+    {
+        $user = auth()->user();
+        $post_id = $request->post_id; // jqueryから送られた投稿idの取得
+        $role = intval($request->role);       // jqueryから送られたrole(どのボタンか)の取得
+        $post->unparticipate($role);   // DB更新
+        $post_partisipations = $this->num_participations($post);
+        $post->participations = $post_partisipations;
+        $mapping = array(0 => 'participate', 1 => 'participate_likely', 2 => 'participate_as_mentor');
+        // return redirect('/posts');
+        return response()->json([
+            'new_participation_count' => $post_partisipations[$mapping[$role]],
+            'role' => $role,
+        ]);
     }
     
 }

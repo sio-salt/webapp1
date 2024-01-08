@@ -46,7 +46,6 @@ class Post extends Model
         }
         elseif ($this->is_this_post_checked_by_auth_user()) {       // check済みではなくレコードが存在する場合はレコードのroleを$roleにアップデートする
             $id = Auth::id();
-            // $this->userParticipations()->updateExistingPivot($id, [
             $this->users()->updateExistingPivot($id, [
                 'role' => $role,
             ]);
@@ -56,7 +55,7 @@ class Post extends Model
             $user->posts()->attach($this->id, ['role' => $role]);
         }
     }
-    
+
     public function unparticipate($role) {
         if ($this->is_this_role_checked_by_auth_user($role)) {      // チェックを外すとき該当のレコードを削除
             $user = auth()->user();

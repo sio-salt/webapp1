@@ -20,26 +20,18 @@ Route::get('/', [PostController::class, 'recentPost'])->name('home');
 Route::get('/posts', [PostController::class, 'recentPost'])->name('recent_post');
 Route::get('/posts/search', [PostController::class, 'tagSearch'])->name('tag_search');
 
+
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
 // Route::controller(PostController::class)->middleware(['verified'])->group(function(){
     Route::get('/posts/create', 'create')->name('posts.create');
     Route::post('/posts', 'store');
     Route::get('/posts/{post}/edit', 'editPost')->name('edit_post');
     Route::put('/posts/{post}', 'updatePost')->name('update_post');
+    Route::post('/posts/{post}/toggle_participation', 'toggleParticipation')->name('toggle_participation');
     Route::post('/posts/{post}/participate', 'participate')->name('participate');
     Route::post('/posts/{post}/unparticipate', 'unparticipate')->name('unparticipate');
     Route::delete('/posts/{post}', 'deletePost')->name('delete_post');
 });
-
-
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::get('/help', function () {

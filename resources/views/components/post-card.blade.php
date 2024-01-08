@@ -68,51 +68,27 @@
         @endif
     </div>
     <p class="mb-6 text-black pl-8">{{ $post->body }}</p>
+    <!--画像機能は後で付ける-->
     {{--<img class="mb-6 rounded object-scale-down h-64 w-full" src="{{ $post->image_url }}">--}}
     <!--<div class="flex flex-row items-center justify-center space-x-16">-->
     <div class="flex flex-row items-center justify-around space-x-4">
         @if ($post->is_this_role_checked_by_auth_user(0))
-            <form action="{{ route('unparticipate', $post) }}" method="post">
-                @csrf
-                <input type="hidden" name="role" value=0 />
-                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-lime-600 hover:bg-lime-700 text-white border-4 border-blue-400 active:bg-lime-800 focus:outline-none focus:border-blue-100">参加します! &nbsp;&nbsp; {{ $post->participations['participate'] }}</button>
-            </form>
+            <button type="button" data-post-id="{{ $post->id }}" data-role="0" class="btn px-1 sm:px-4 py-1 rounded bg-lime-600 hover:bg-lime-700 text-white border-4 border-blue-400 active:bg-lime-800 focus:outline-none focus:border-blue-100">参加します! &nbsp;&nbsp; {{ $post->participations['participate'] }}</button>
         @else
-            <form action="{{ route('participate', $post) }}" method="post">
-                @csrf
-                <input type="hidden" name="role" value=0 />
-                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-lime-600 hover:bg-lime-700 text-white border border-black active:bg-lime-800 focus:outline-none focus:ring focus:ring-blue-400">参加します! &nbsp;&nbsp; {{ $post->participations['participate'] }}</button>
-            </form>
+            <button type="button" data-post-id="{{ $post->id }}" data-role="0" class="btn px-1 sm:px-4 py-1 rounded bg-lime-600 hover:bg-lime-700 text-white border border-black active:bg-lime-800 focus:outline-none focus:ring focus:ring-blue-400">参加します! &nbsp;&nbsp; {{ $post->participations['participate'] }}</button>
         @endif
-            
+        
         @if ($post->is_this_role_checked_by_auth_user(1))
-            <form action="{{ route('unparticipate', $post) }}" method="post">
-                @csrf
-                <input type="hidden" name="role" value=1 />
-                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-green-500 hover:bg-green-600 text-white border-4 border-blue-400 active:bg-green-700 focus:outline-none focus:border-blue-100">参加するかも &nbsp;&nbsp; {{ $post->participations['participate_likely'] }}</button>
-            </form>
+            <button type="button" data-post-id="{{ $post->id }}" data-role="1" class="btn px-1 sm:px-4 py-1 rounded bg-green-500 hover:bg-green-600 text-white border-4 border-blue-400 active:bg-green-700 focus:outline-none focus:border-blue-100">参加するかも &nbsp;&nbsp; {{ $post->participations['participate_likely'] }}</button>
         @else
-            <form action="{{ route('participate', $post) }}" method="post">
-                @csrf
-                <input type="hidden" name="role" value=1 />
-                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-green-500 hover:bg-green-600 text-white border border-black active:bg-green-700 focus:outline-none focus:ring focus:ring-blue-400">参加するかも &nbsp;&nbsp; {{ $post->participations['participate_likely'] }}</button>
-            </form>
+            <button type="button" data-post-id="{{ $post->id }}" data-role="1" class="btn px-1 sm:px-4 py-1 rounded bg-green-500 hover:bg-green-600 text-white border border-black active:bg-green-700 focus:outline-none focus:ring focus:ring-blue-400">参加するかも &nbsp;&nbsp; {{ $post->participations['participate_likely'] }}</button>
         @endif
-            
+        
         @if ($post->is_this_role_checked_by_auth_user(2))
-            <form action="{{ route('unparticipate', $post) }}" method="post">
-                @csrf
-                <input type="hidden" name="role" value=2 />
-                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-pink-600 hover:bg-pink-700 text-white border-4 border-blue-300 active:bg-pink-800 focus:outline-none focus:border-blue-100">メンターとして参加 &nbsp;&nbsp; {{ $post->participations['participate_as_mentor'] }}</button>
-            </form>
+            <button type="button" data-post-id="{{ $post->id }}" data-role="2" class="btn px-1 sm:px-4 py-1 rounded bg-pink-600 hover:bg-pink-700 text-white border-4 border-blue-300 active:bg-pink-800 focus:outline-none focus:border-blue-100">メンターとして参加 &nbsp;&nbsp; {{ $post->participations['participate_as_mentor'] }}</button>
         @else
-            <form action="{{ route('participate', $post) }}" method="post">
-                @csrf
-                <input type="hidden" name="role" value=2 />
-                <button type="submit" class="btn px-1 sm:px-4 py-1 rounded bg-pink-600 hover:bg-pink-700 text-white border border-black active:bg-pink-800 focus:outline-none focus:ring focus:ring-blue-300">メンターとして参加 &nbsp;&nbsp; {{ $post->participations['participate_as_mentor'] }}</button>
-            </form>
+            <button type="button" data-post-id="{{ $post->id }}" data-role="2" class="btn px-1 sm:px-4 py-1 rounded bg-pink-600 hover:bg-pink-700 text-white border border-black active:bg-pink-800 focus:outline-none focus:ring focus:ring-blue-300">メンターとして参加 &nbsp;&nbsp; {{ $post->participations['participate_as_mentor'] }}</button>
         @endif
-        </form>
     </div>
 </div>
 
