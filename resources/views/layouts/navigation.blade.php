@@ -8,7 +8,7 @@
                         <!-- Logo -->
                         <!--<div class="shrink-0 flex items-center">-->
                         <div class="shrink-0 items-center">
-                            <a href="{{ route('recent_post') }}" class="md:pl-2 py-1 rounded font-bold md:text-xl text-white">山形大学 勉強会 掲示板</a>
+                            <a href="{{ route('recent_post') }}" class="md:pl-2 py-1 rounded font-bold text-xl text-white">山形大学 勉強会 掲示板</a>
                         </div>
         
                     </div>
