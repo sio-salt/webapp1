@@ -10,9 +10,9 @@
             @auth
                 @if($post->user->id == Auth::user()->id)
             
-                    <div x-data="{ isOpen: false }" class="relative inline-block">
+                    <div x-data="{ isOpen: false }" class="relative inline-block rounded-md">
                         <!-- Dropdown toggle button -->
-                        <button @click="isOpen = !isOpen" class="relative block p-2 text-gray-700 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 focus:ring-blue-300 focus:ring focus:outline-none">
+                        <button @click="isOpen = !isOpen" class="relative block p-2 text-gray-700 bg-white hover:bg-gray-200 border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 focus:ring-blue-300 focus:ring focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                             </svg>
