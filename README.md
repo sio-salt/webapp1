@@ -39,7 +39,7 @@ ym-study-group ・ 山形大学 勉強会 掲示板</a></h1>
 **フロントエンド**
 - HTML
 - Tailwind CSS
-- JavaScript, Ajax
+- JavaScript, jQuery, Ajax
 
 **バックエンド**
 - PHP 8.2.12
