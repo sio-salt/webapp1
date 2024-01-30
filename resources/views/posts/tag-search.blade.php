@@ -13,7 +13,7 @@
                             <label for="lecsearchbox" class="col-span-12">{{ __('Filtering') }}</label>
                             <!--<select name="post[lecture_id]" id="lectures" class="col-span-6 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>-->
                             <select name="lecture" id="lectures" class="col-span-12 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
-                            <input type="text" id="lecsearchbox" class="col-span-7 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
+                            <input type="text" id="lecsearchbox" placeholder="e.g. 量子" class="col-span-7 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
                             <input type="button" id="lecSearch" value="{{ __('Filter') }}" class="col-span-5 btn py-2 flex-initial text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         </div>
                         
@@ -22,7 +22,7 @@
                             <label for="tagsearchbox" class="col-span-12">{{ __('Filtering') }}</label>
                             <!--<select name="post[tag_id]" id="tags" class="col-span-6 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>-->
                             <select name="tag" id="tags" class="col-span-12 flex py-2 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm"></select>
-                            <input type="text" id="tagsearchbox" class="col-span-7 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
+                            <input type="text" id="tagsearchbox" placeholder="e.g. 物理" class="col-span-7 py-2 border-2 flex bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm">
                             <input type="button" id="tagSearch" value="{{ __('Filter') }}" class="col-span-5 btn py-2 flex-initial text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         </div>
                         
