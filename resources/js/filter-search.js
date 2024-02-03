@@ -1,5 +1,5 @@
 // 選択肢・Optionの作成と追加を実行する関数
-function OptionCreator (selectPrefBox, optionList) {
+function OptionCreator (selectPrefBox, optionList, oldId = -1) {
     
     optionList.forEach((opt, index) => {
 
@@ -7,6 +7,12 @@ function OptionCreator (selectPrefBox, optionList) {
         option.setAttribute('value', opt.id);
         option.setAttribute('data-name', opt.value);
         option.innerText = opt.value;
+        option.selected = false;
+        if(opt.id === oldId) {
+            option.selected = true;
+            selectPrefBox.value = opt.value;
+        }
+
 
         selectPrefBox.appendChild(option);
     });
@@ -22,7 +28,7 @@ function NoMatchOption (selectPrefBox) {
 
 // SelectBoxを作成する関数
 // [ 1. Serverから受信した optionData から動的に SelectBoxを作成する ]
-function SelectCreator (selectPrefBox, optionList, searchList, searchBool) {
+function SelectCreator (selectPrefBox, optionList, searchList, searchBool, oldId = -1) {
 
     if (optionList.length == 0) return;
 
@@ -37,8 +43,8 @@ function SelectCreator (selectPrefBox, optionList, searchList, searchBool) {
 
 
     // 選択肢・Optionの作成と追加
-    if (searchList.length !== 0 && searchBool) OptionCreator(selectPrefBox, searchList); //searchBoolがtrueならsearchListでoptionを作成する。
-    else if (!searchBool) OptionCreator(selectPrefBox, optionList); //searchBoolがfalseならoptionListでoptionを作成する。
+    if (searchList.length !== 0 && searchBool) OptionCreator(selectPrefBox, searchList, oldId); //searchBoolがtrueならsearchListでoptionを作成する。
+    else if (!searchBool) OptionCreator(selectPrefBox, optionList, oldId); //searchBoolがfalseならoptionListでoptionを作成する。
     else NoMatchOption(selectPrefBox);
 }
 
@@ -61,40 +67,38 @@ function Filtering (optionCustom, searchStr, searchResult) {
 // 1-1. Serverから受信した、DataSet
 const lectureOption = window.Laravel.lectures;
 const tagOption = window.Laravel.tags;
+const oldLectureId = Number(window.Laravel.old_lecture_id);
+const oldTagId = Number(window.Laravel.old_tag_id);
 
 const selectBoxesData = [
-    {selectId: "lectures", param: 'lecture', data: lectureOption, searchboxId: 'lecsearchbox', searchBtnId: 'lecSearch'},
-    {selectId: 'tags', param: 'tag', data: tagOption, searchboxId: 'tagsearchbox', searchBtnId: 'tagSearch'},
+    {selectId: "lectures", param: 'lecture', data: lectureOption, searchboxId: 'lecsearchbox', searchBtnId: 'lecSearch', oldId: oldLectureId},
+    {selectId: 'tags', param: 'tag', data: tagOption, searchboxId: 'tagsearchbox', searchBtnId: 'tagSearch', oldId: oldTagId},
 ];
 
 // URLのクエリパラメータを取得
 let params = new URLSearchParams(window.location.search);
 
 
-
 selectBoxesData.forEach((item) => {
     // 1-4. SelectBoxを取得する
     const selectPrefBox = document.getElementById(item.selectId);
     const searchbox = document.getElementById(item.searchboxId);
-    const searchBtn = document.getElementById(item.searchBtnId);
     
     const optionCustom = item.data;
-    console.log(item.data);
     let searchStr = ''; // 検索文字列
-    
+
     const queryParam = Number(params.get(item.param)); // queryParamはidになる。
     // paramが存在していればvalueに設定
     if (queryParam) {
-        // let foundObject = optionCustom.find(obj => obj.id === queryParam);
         let foundObject = optionCustom.find(({ id }) => id === queryParam);
         document.getElementById(item.searchboxId).value = foundObject['value'];
         searchStr = foundObject['value'];
     }
-    
+ 
     // 1-5. 初期のSelectBoxを作成する
     let searchResult = [];
     searchResult = Filtering(optionCustom, searchStr, searchResult);
-    SelectCreator(selectPrefBox, optionCustom, searchResult, true);
+    SelectCreator(selectPrefBox, optionCustom, searchResult, true, item.oldId);
     
     
     // 2-3. inputイベントで検索の入力文字列を受け取って、検索結果の配列を作成する

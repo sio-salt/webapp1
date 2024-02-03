@@ -106,12 +106,14 @@ class PostController extends Controller
         foreach($tags as $ta) {
             $tag_id_name[] = ['id' => $ta->id, 'value' => $ta->name];
         }
-        
         $old_values = [
             'title' => old('post.title', ''),
             'start_at' => old('post.start_at', date('Y-m-j')),
             'place' => old('post.place', ''),
+            'lecture_id' => old('post.lecture_id', ''),
+            'tag_id' => old('post.tag_id', ''),
             'body' => old('post.body', ''),
+            'teacher_welcome' => old('post.teacher_welcome', ''),
         ];
 
         return view('posts.create')->with([

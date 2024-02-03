@@ -14,8 +14,8 @@
 </div>
 
 
-<div class="mt-4"
-    <label for="start_at">{{ __('Start Time') }}</label>
+<div class="mt-4">
+    <label for="start_at"></label>{{ __('Start Time') }}</label>
     <input name="post[start_at]" id="start_at" type="datetime-local" min="2023-10-01T12:00" value="{{ $old_values['start_at'] }}" 
     class="mt-1 block w-full py-2 px-3 border-2 bg-gray-100 rounded-lg shadow-sm focus:outline-none sm:text-sm @error('start_at') border-red-500 @enderror"/>
     
@@ -25,6 +25,7 @@
     </div>
     @enderror
 </div>
+
 
 <div class="mt-4">
     <label for="place">{{ __('Place') }}</label>
@@ -37,7 +38,6 @@
     </div>
     @enderror
 </div>
-
 
 
 <div class="mt-4 grid grid-cols-12 gap-2">
@@ -84,7 +84,7 @@
 
 <label for="teacher_welcome">
     <input name="post[teacher_welcome]" type="hidden" value="0"/>
-    <input name="post[teacher_welcome]" type="checkbox" value="1" id="teacher_welcome"/>
+    <input name="post[teacher_welcome]" type="checkbox" value="1" id="teacher_welcome" @if( $old_values['teacher_welcome'] == '1' ) checked @endif />
     {{ __('Welcome those who want to teach') }}
 </label>
 
