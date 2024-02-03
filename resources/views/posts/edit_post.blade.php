@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <p class="flex justify-center text-lg text-black font-bold pb-4 pt-6">{{ __('Edit Post')  }}</p>
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form action="/posts/{{ $old_values->id }}" method="POST" id='edit_form' onsubmit="return false;">
+                    <form action="/posts/{{ $old_values['id'] }}" method="POST" id='edit_form' onsubmit="return false;">
                         @csrf
                         @method('PUT')
                         <x-make-post :oldvalues="$old_values"/> <!--コンポーネントに値を渡すときはアンダースコア使えない!-->
