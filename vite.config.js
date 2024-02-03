@@ -9,7 +9,8 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-		'resources/js/participate.js',
+                'resources/js/participate.js',
+                'resources/js/filter-search.js',
             ],
             refresh: true,
         }),

@@ -65,7 +65,7 @@ class PostController extends Controller
             $posts = collect();
         }
         else {
-            $posts = $post->getPaginateByLimitWithTagLecture($tag_query, $lec_query);
+            $posts = $post->getPaginateByLimitWithTagLectureId($tag_query, $lec_query);
             Carbon::setLocale('ja');
             foreach ($posts as $post) {
                 // 各ポストの開始日時をフォーマット
@@ -78,7 +78,6 @@ class PostController extends Controller
         
         $lectures = $lecture->get();
         $lec_id_name = [];
-        // $lec_id_name[] = ['id' => null, 'value' => 'group@講義'];
         foreach($lectures as $lec) {
             $lec_id_name[] = ['id' => $lec->id, 'value' => $lec->name];
         }
@@ -99,7 +98,6 @@ class PostController extends Controller
     {
         $lectures = $lecture->get();
         $lec_id_name = [];
-        // $lec_id_name[] = ['id' => null, 'value' => 'group@講義'];
         foreach($lectures as $lec) {
             $lec_id_name[] = ['id' => $lec->id, 'value' => $lec->name];
         }
@@ -108,9 +106,18 @@ class PostController extends Controller
         foreach($tags as $ta) {
             $tag_id_name[] = ['id' => $ta->id, 'value' => $ta->name];
         }
+        
+        $old_values = [
+            'title' => old('post.title', ''),
+            'start_at' => old('post.start_at', date('Y-m-j')),
+            'place' => old('post.place', ''),
+            'body' => old('post.body', ''),
+        ];
+
         return view('posts.create')->with([
             'lectures' => $lec_id_name,
             'tags' => $tag_id_name,
+            'old_values' => $old_values,
         ]);
     }
     
@@ -119,13 +126,22 @@ class PostController extends Controller
     {
         DB::transaction(function () use ($request) {
             $user = auth()->user();
-            if (empty($request['tag']['name'])) {
-                //
-            }
-            else {
-                $tag = new Tag;
-                $tag->fill($request['tag']);
-                $tag->save();
+            if (!empty($request['tag']['name'])) {
+                $tag = DB::table('tags')->where('name', $request['tag']['name'])->first();
+                
+                if ($tag) {
+                    $tmp = $request['tag'];  // tmpで2度手間をやらないと次のエラーが出る「Indirect modification of overloaded element of App\Http\Requests\PostRequest has no effect」
+                    $tmp['id'] = $tag->id;
+                    $reqest['tag'] = $tmp;
+                }
+                else {
+                    $tag = new Tag;
+                    $tag->fill($request['tag']);
+                    $tag->save();
+                    $tmp = $request['post'];  // tmpで2度手間をやらないと次のエラーが出る「Indirect modification of overloaded element of App\Http\Requests\PostRequest has no effect」
+                    $tmp['tag_id'] = $tag->id;  // 新しいタグのIDを設定
+                    $request['post'] = $tmp;
+                }
             }
             
             $post = new Post;
@@ -146,17 +162,26 @@ class PostController extends Controller
     {
         DB::transaction(function () use ($request, $post) {
             $user = auth()->user();
-            if (empty($request['tag']['name'])) {
-                //
-            }
-            else {
-                $tag->fill($request['tag']);
-                $tag->save();
+            if (!empty($request['tag']['name'])) {
+                $tag = DB::table('tags')->where('name', $request['tag']['name'])->first();
+                
+                if ($tag) {
+                    $tmp = $request['tag'];  // tmpで2度手間をやらないと次のエラーが出る「Indirect modification of overloaded element of App\Http\Requests\PostRequest has no effect」
+                    $tmp['id'] = $tag->id;
+                    $reqest['tag'] = $tmp;
+                }
+                else {
+                    $tag = new Tag;
+                    $tag->fill($request['tag']);
+                    $tag->save();
+                    $tmp = $request['post'];  // tmpで2度手間をやらないと次のエラーが出る「Indirect modification of overloaded element of App\Http\Requests\PostRequest has no effect」
+                    $tmp['tag_id'] = $tag->id;  // 新しいタグのIDを設定
+                    $request['post'] = $tmp;
+                }
             }
             
             $post->fill($request['post']);
             $post->user_id = $user->id;
-            // $post->faculty_id = $user->faculty_id;
             $post->save();
             $post->lectures()->sync($post->lecture_id);
             $post->tags()->sync($post->tag_id);
@@ -181,10 +206,13 @@ class PostController extends Controller
         foreach($tags as $ta) {
             $tag_id_name[] = ['id' => $ta->id, 'value' => $ta->name];
         }
+        
+        $old_values = $post;
+        
         return view('posts.edit_post')->with([
-            'post' => $post,
             'lectures' => $lec_id_name,
             'tags' => $tag_id_name,
+            'old_values' => $old_values,
         ]);
     }
     
@@ -249,7 +277,6 @@ class PostController extends Controller
         $post_partisipations = $this->num_participations($post);
         $post->participations = $post_partisipations;
         $mapping = array(0 => 'participate', 1 => 'participate_likely', 2 => 'participate_as_mentor');
-        // return redirect('/posts');
         return response()->json([
             'new_participation_count' => $post_partisipations[$mapping[$role]],
             'role' => $role,

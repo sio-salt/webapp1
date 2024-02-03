@@ -1,27 +1,11 @@
-
-window.onload = function() {
-    const lectureOption = JSON.parse(document.getElementById('lectureOption').textContent);
-    console.log(lectureOption);
-    const tagOption = JSON.parse(document.getElementById('tagOption').textContent);
-    console.log(tagOption);
-}
-
-
 // 選択肢・Optionの作成と追加を実行する関数
 function OptionCreator (selectPrefBox, optionList) {
     
     optionList.forEach((opt, index) => {
 
-        // 最初は、<option value="">選択してください</option> を作成する
-        if (index == 0) {
-            let option = document.createElement('option');
-            option.setAttribute('value', '');
-            option.innerText = '選択してください';
-            selectPrefBox.appendChild(option);
-        }
-
         let option = document.createElement('option');
         option.setAttribute('value', opt.id);
+        option.setAttribute('data-name', opt.value);
         option.innerText = opt.value;
 
         selectPrefBox.appendChild(option);
@@ -37,26 +21,56 @@ function NoMatchOption (selectPrefBox) {
 }
 
 // SelectBoxを作成する関数
-
-
 // [ 1. Serverから受信した optionData から動的に SelectBoxを作成する ]
 function SelectCreator (selectPrefBox, optionList, searchList, searchBool) {
 
     if (optionList.length == 0) return;
 
     selectPrefBox.innerHTML = ''; // 初期化処理
+    
+
+    // 検索結果の数をセレクトボックスの先頭に追加
+    let option = document.createElement('option');
+    option.setAttribute('value', '');
+    option.innerText = `検索結果：${searchList.length}件`;
+    selectPrefBox.appendChild(option);
+
 
     // 選択肢・Optionの作成と追加
-    if (searchList.length !== 0 && searchBool) OptionCreator(selectPrefBox, searchList);
-    else if (!searchBool) OptionCreator(selectPrefBox, optionList);
+    if (searchList.length !== 0 && searchBool) OptionCreator(selectPrefBox, searchList); //searchBoolがtrueならsearchListでoptionを作成する。
+    else if (!searchBool) OptionCreator(selectPrefBox, optionList); //searchBoolがfalseならoptionListでoptionを作成する。
     else NoMatchOption(selectPrefBox);
 }
 
 
+function Filtering (optionCustom, searchStr, searchResult) {
+    searchResult = optionCustom.filter((pref) => { // 検索文字列から絞り込む
+        if (/^group@/.test(pref.value)) return false;
+
+        // 正規表現で変数を使用するためには、RegExp-Classを使用する
+        let reg = new RegExp(`${searchStr}`); // 部分一致
+
+        // 検索文字列のパターンと、登録データがマッチするかでTestをする
+        return reg.test(pref.value);
+    });
+    
+    return searchResult;
+}
+
+
+// 1-1. Serverから受信した、DataSet
+const lectureOption = window.Laravel.lectures;
+const tagOption = window.Laravel.tags;
+
 const selectBoxesData = [
-    {selectId: "lectures", data: lectureOption, searchboxId: 'lecsearchbox', searchBtnId: 'lecSearch'},
-    {selectId: 'tags', data: tagOption, searchboxId: 'tagsearchbox', searchBtnId: 'tagSearch'},
+    {selectId: "lectures", param: 'lecture', data: lectureOption, searchboxId: 'lecsearchbox', searchBtnId: 'lecSearch'},
+    {selectId: 'tags', param: 'tag', data: tagOption, searchboxId: 'tagsearchbox', searchBtnId: 'tagSearch'},
 ];
+
+// URLのクエリパラメータを取得
+let params = new URLSearchParams(window.location.search);
+
+
 
 selectBoxesData.forEach((item) => {
     // 1-4. SelectBoxを取得する
@@ -65,35 +79,36 @@ selectBoxesData.forEach((item) => {
     const searchBtn = document.getElementById(item.searchBtnId);
     
     const optionCustom = item.data;
+    console.log(item.data);
+    let searchStr = ''; // 検索文字列
+    
+    const queryParam = Number(params.get(item.param)); // queryParamはidになる。
+    // paramが存在していればvalueに設定
+    if (queryParam) {
+        // let foundObject = optionCustom.find(obj => obj.id === queryParam);
+        let foundObject = optionCustom.find(({ id }) => id === queryParam);
+        document.getElementById(item.searchboxId).value = foundObject['value'];
+        searchStr = foundObject['value'];
+    }
     
     // 1-5. 初期のSelectBoxを作成する
-    SelectCreator(selectPrefBox, optionCustom, [], false);
-    
-    // 2-2. 検索結果のOption-List
     let searchResult = [];
+    searchResult = Filtering(optionCustom, searchStr, searchResult);
+    SelectCreator(selectPrefBox, optionCustom, searchResult, true);
+    
     
     // 2-3. inputイベントで検索の入力文字列を受け取って、検索結果の配列を作成する
     searchbox.addEventListener('input', (e) => {
-    
-        let searchStr = e.target.value; // 検索文字列
-    
-        searchResult = optionCustom.filter((pref) => { // 検索文字列から絞り込む
-            if (/^group@/.test(pref.value)) return false;
-    
-            // 正規表現で変数を使用するためには、RegExp-Classを使用する
-            let reg = new RegExp(`${searchStr}`); // 部分一致
-    
-            // 検索文字列のパターンと、登録データがマッチするかでTestをする
-            return reg.test(pref.value);
-        });
-        console.log({searchResult});
+        
+        searchStr = e.target.value; // 検索文字列
+        
+        searchResult = Filtering(optionCustom, searchStr, searchResult);
+        
+        // テキストを書き換えたときに自動でfiltering
+        SelectCreator(selectPrefBox, optionCustom, searchResult, true);
     });
-    
-    
-    // 2-5. 検索ボタンに、clickイベントを追加する
-    // searchResultで SelectBoxを作成する
-    searchBtn.onclick = () => SelectCreator(selectPrefBox, optionCustom, searchResult, true);
 });
+
 
 
 // textareaからの入力をtagOptionに追加する
@@ -113,7 +128,14 @@ tagAddBtn.onclick = (event) => {
         const tagSearchBox = document.getElementById('tagsearchbox');
         tagSearchBox.value = "";
         const selectPrefBox2 = document.getElementById('tags');
-        selectPrefBox2.value = existingOption.id;
+        
+        // data-name属性が入力されたタグ名と一致する<option>要素を探す
+        let matchingOption = Array.from(selectPrefBox2.options).find(opt => opt.dataset.name === value);
+        
+        if (matchingOption) {
+            // 一致する<option>要素が見つかった場合、そのvalue属性の値を<select>タグのvalue属性に設定
+            selectPrefBox2.value = matchingOption.value;
+        }
         
         existAlert.textContent = "既に存在します";
     }
@@ -128,9 +150,21 @@ tagAddBtn.onclick = (event) => {
         // 2つ目のselectタグを更新し、新しく追加したオプションを選択状態にする
         const selectPrefBox2 = document.getElementById('tags');
         SelectCreator(selectPrefBox2, tagOption, [], false);
-        selectPrefBox2.value = id;
+        selectPrefBox2.options[id].selected = true;
+
         
         existAlert.textContent = "";
     }
 };
+
+$(function () {
+    $('#add_tag') // cancelEnterとついたIDにkeydownイベントを付与
+        .on('keydown', function (e) {
+        // e.key == 'Enter'でエンターキーが押された場合の条件を設定
+        if (e.key == 'Enter') {
+            // 何もせずに処理を終える
+            return false;
+        }
+    })
+});
 

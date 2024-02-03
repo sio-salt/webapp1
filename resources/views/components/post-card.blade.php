@@ -47,13 +47,16 @@
     <!--タグの表示-->
     <div class="mb-4 pl-8">
         @foreach ( $post->lectures as $lecture )
-            <a href="{{ route('tag_search', ['lecture' => $lecture->name]) }}" 
+            {{--<a href="{{ route('tag_search', ['lecture' => $lecture->name]) }}" --}}
+            <a href="{{ route('tag_search', ['lecture' => $lecture->id]) }}" 
                 class="inline-block bg-blue-200 hover:bg-blue-300 text-indigo-900 px-2 py-1 rounded-full text-sm active:bg-blue-400 focus:outline-none focus:ring :ring-indigo-500">
                 #{{ $lecture->name }}
             </a>
         @endforeach
         @foreach ( $post->tags as $tag )
-            <a href="{{ route('tag_search', ['tag' => $tag->name]) }}" class="inline-block bg-blue-200 hover:bg-blue-300 text-indigo-900 px-2 py-1 rounded-full text-sm active:bg-blue-400 focus:outline-none focus:ring :ring-indigo-500">#{{ $tag->name }}</a>
+            {{-- <a href="{{ route('tag_search', ['tag' => $tag->name]) }}" --}}
+            <a href="{{ route('tag_search', ['tag' => $tag->id]) }}" 
+                class="inline-block bg-blue-200 hover:bg-blue-300 text-indigo-900 px-2 py-1 rounded-full text-sm active:bg-blue-400 focus:outline-none focus:ring :ring-indigo-500">#{{ $tag->name }}</a>
         @endforeach
     </div>
     <div class="mb-4 pl-12">

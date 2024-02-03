@@ -69,7 +69,26 @@ class Post extends Model
         return $this->orderBy('created_at', 'DESC')->paginate($limit_count);
     }
     
-    public function getPaginateByLimitWithTagLecture ($tagName, $lectureName, int $limit_count = 20)
+    public function getPaginateByLimitWithTagLectureId ($tagId, $lectureId, int $limit_count = 20)
+    {
+        $query = $this->orderBy('created_at', 'DESC');
+        
+        if (!is_null($tagId)) {
+            $query = $query->whereHas('tags', function ($q) use ($tagId) {
+                $q->where('id', $tagId);
+            });
+        }
+        
+        if (!is_null($lectureId)) {
+            $query = $query->whereHas('lectures', function ($q) use ($lectureId) {
+                $q->where('id', $lectureId);
+            });
+        }
+        
+        return $query->paginate($limit_count);
+    }
+    
+    public function getPaginateByLimitWithTagLectureName ($tagName, $lectureName, int $limit_count = 20)
     {
         $query = $this->orderBy('created_at', 'DESC');
         
