@@ -87,10 +87,10 @@ selectBoxesData.forEach((item) => {
     const optionCustom = item.data;
     let searchStr = ''; // 検索文字列
 
-    const queryParam = Number(params.get(item.param)); // queryParamはidになる。
+    const queryId = Number(params.get(item.param)); // queryIdはidになる。
     // paramが存在していればvalueに設定
-    if (queryParam) {
-        let foundObject = optionCustom.find(({ id }) => id === queryParam);
+    if (queryId) {
+        let foundObject = optionCustom.find(({ id }) => id === queryId);
         document.getElementById(item.searchboxId).value = foundObject['value'];
         searchStr = foundObject['value'];
     }
@@ -159,8 +159,7 @@ tagAddBtn.onclick = (event) => {
     
         // 2つ目のselectタグを更新し、新しく追加したオプションを選択状態にする
         const selectPrefBox2 = document.getElementById('tags');
-        SelectCreator(selectPrefBox2, tagOption, [], false);
-        selectPrefBox2.options[id].selected = true;
+        SelectCreator(selectPrefBox2, tagOption, [], false, id);
 
         
         existAlert.textContent = "";
