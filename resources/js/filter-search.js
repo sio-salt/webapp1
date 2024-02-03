@@ -109,7 +109,13 @@ selectBoxesData.forEach((item) => {
         searchResult = Filtering(optionCustom, searchStr, searchResult);
         
         // テキストを書き換えたときに自動でfiltering
-        SelectCreator(selectPrefBox, optionCustom, searchResult, true);
+        if (searchResult.length === 1) {
+            const oneId = searchResult[0]['id'];
+            SelectCreator(selectPrefBox, optionCustom, searchResult, true, oneId);
+        }
+        else {
+            SelectCreator(selectPrefBox, optionCustom, searchResult, true);
+        }
     });
 });
 
