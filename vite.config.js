@@ -4,6 +4,16 @@ import laravel from 'laravel-vite-plugin';
 const path = require('path');
 
 export default defineConfig({
+    server: {
+        host: true,
+        hmr: {
+            host: 'localhost',
+            // host: env.APP_HOST
+        },
+        // https: {
+        //     key: fd.readFeleSync('./')
+        // }
+    },
     plugins: [
         laravel({
             input: [
@@ -21,5 +31,5 @@ export default defineConfig({
             // 追記
             '$': 'jQuery',
         }
-    }, 
+    },
 });
