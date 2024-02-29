@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
 use DateTime;
 
 class LectureSeeder extends Seeder
@@ -16,16 +16,6 @@ class LectureSeeder extends Seeder
      */
     public function run()
     {
-        /* DB::table('lectures')->insert([ */
-        /*     'name' => '場の量子論', */
-        /*     'faculty_id' => 1, */
-        /* ]); */
-        
-        $lecture_names = file('database/seeders/first_plus_second_uniq_lectures', FILE_IGNORE_NEW_LINES);
-        foreach ($lecture_names as $lecture_name) {
-            DB::table('lectures')->insert([
-                'name' => $lecture_name,
-            ]);
-        }
+        Artisan::call('scrape:yamadai');
     }
 }

@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
+use Illuminate\Support\Facades\DB;
+
 
 class ScrapeYamadai extends Command
 {
@@ -33,13 +35,18 @@ class ScrapeYamadai extends Command
      */
     public function handle()
     {
+        $this->insertLectures();
+    }
+
+    private function insertLectures()
+    {
         $client = new Client();
+        sleep($this::WAIT_TIME);
         $response = $client->request('GET', $this::BASE_URL . 'home.htm');
         $html = '' . $response->getBody();
         $html = mb_convert_encoding($html, 'UTF-8', $this::CHAR_SET); // エンコーディングを変換
         $crawler = new Crawler($html);
         $faculty_urls = array();
-        $this::WAIT_TIME;
 
         // 学部トップページの中の学部ループ
         $crawler->filter('a')->each(function (Crawler $node) use ($client, &$faculty_urls) {
@@ -48,18 +55,18 @@ class ScrapeYamadai extends Command
                 return false;
 
             array_push($faculty_urls, $href);
+            sleep($this::WAIT_TIME);
             $response = $client->request('GET', $this::BASE_URL . $href);
-            $this::WAIT_TIME;
             $html = '' . $response->getBody();
             $crawler = new Crawler($html);
             $class_list_url = $crawler->filter('frameset > frameset > frame:first-child')->attr('src');
+            sleep($this::WAIT_TIME);
             $response = $client->request('GET', $this::BASE_URL . $class_list_url);
             $html = '' . $response->getBody();
             $html = mb_convert_encoding($html, 'UTF-8', $this::CHAR_SET); // エンコーディングを変換
             $crawler = new Crawler($html);
             $faculty_name = $crawler->filter('body > p')->first()->text();
             // dump($faculty_name);
-            $this::WAIT_TIME;
 
             // その学部の人が受けられる講義の種類のループ
             $crawler->filter('a[target="list"]')->each(function (Crawler $node) use ($client) {
@@ -67,15 +74,16 @@ class ScrapeYamadai extends Command
                 if (!preg_match('/list\d+\.htm/', $href))
                     return false;
 
+                sleep($this::WAIT_TIME);
                 $response = $client->request('GET', $this::BASE_URL . $href);
                 $html = '' . $response->getBody();
                 $crawler = new Crawler($html);
-                $crawler->filter('tr')->each(function (Crawler $node) use ($client) {
-                    if ($node->filter('td')->count() < 5)
+                $lectures = $crawler->filter('tr')->each(function (Crawler $node) use ($client) {
+                    if ($node->filter('td')->count() != 7)
                         return false;
 
                     $tds = $node->filter('td');
-                    $lecture_info = [
+                    $lecture = [
                         'code' => $tds->eq(0)->text(),
                         'semester' => $tds->eq(1)->text(),
                         'subject' => $tds->eq(2)->text(),
@@ -83,8 +91,11 @@ class ScrapeYamadai extends Command
                         'year' => $tds->eq(4)->text(),
                         'form' => $tds->eq(5)->text(),
                     ];
-                    $this::WAIT_TIME;
+                    return implode(", ", $lecture);
                 });
+                // DB::table('lectures')->insert($lectures);
+                // $text = implode("\n", $lectures);
+                file_put_contents('file.txt', $lectures);
             });
         });
         return Command::SUCCESS;
