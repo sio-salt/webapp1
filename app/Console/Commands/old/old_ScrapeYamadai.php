@@ -8,7 +8,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Support\Facades\DB;
 
 
-class ScrapeYamadai extends Command
+class old_ScrapeYamadai extends Command
 {
     const BASE_URL = 'https://www.yamagata-u.ac.jp/gakumu/syllabus/2023/'; // 山形大学の学部のシラバスのトップページbase_url
     const CHAR_SET = 'Shift-JIS';
@@ -37,12 +37,77 @@ class ScrapeYamadai extends Command
     {
 // $str = 'ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳№㈲㈱㈹㊤㊦㊥㊧㊨';
 
-        // $this->insertLectures();
-        $python_script = "ScrapeYamadai_csv.py";
-        $python_path = './app/Console/Commands/';
-        $command = "python3 " . $python_path . $python_script . " 2>" . $python_path . "error.log";
-        // python を実行
-        exec($command, $outputs, $return);
+        $this->insertLectures();
+    }
+
+    private function insertLectures()
+    {
+        $client = new Client();
+        sleep($this::WAIT_TIME);
+        $response = $client->request('GET', $this::BASE_URL . 'home.htm');
+        $html = '' . $response->getBody();
+        $html = mb_convert_encoding($html, 'UTF-8', $this::CHAR_SET); // エンコーディングを変換
+        $crawler = new Crawler($html);
+        $faculty_urls = array();
+
+        // 学部トップページの中の学部ループ
+        $crawler->filter('a')->each(function (Crawler $node) use ($client, &$faculty_urls)
+        {
+            $href = $node->attr('href');
+            if (!preg_match('/\d+sylla\.htm/', $href))
+                return false;
+
+            array_push($faculty_urls, $href);
+            sleep($this::WAIT_TIME);
+            $response = $client->request('GET', $this::BASE_URL . $href);
+            $html = '' . $response->getBody();
+            $crawler = new Crawler($html);
+            $class_list_url = $crawler->filter('frameset > frameset > frame:first-child')->attr('src');
+            sleep($this::WAIT_TIME);
+            $response = $client->request('GET', $this::BASE_URL . $class_list_url);
+            $html = '' . $response->getBody();
+            // $html = mb_convert_encoding($html, 'UTF-8', $this::CHAR_SET); // エンコーディングを変換
+            // $html = mb_convert_encoding($html, 'UTF-8', 'auto'); // エンコーディングを変換
+            $crawler = new Crawler($html);
+            // $faculty_name = $crawler->filter('body > p')->first()->text();
+            // dump($faculty_name);
+
+            // その学部の人が受けられる講義の種類のループ
+            $crawler->filter('a[target="list"]')->each(function (Crawler $node) use ($client)
+            {
+                $href = $node->attr('href');
+                echo $href . PHP_EOL;
+                // if (!preg_match('/\Alist\d+\.htm\z/', $href) || preg_match('/.*pdf/', $href))
+                if (!preg_match('/\Alist\d+\.htm\z/', $href))
+                    return false;
+
+                sleep($this::WAIT_TIME);
+                $response = $client->request('GET', $this::BASE_URL . $href);
+                $html = '' . $response->getBody();
+                $crawler = new Crawler($html);
+                $lectures = $crawler->filter('tr')->each(function (Crawler $node) use ($client)
+                {
+                    if ($node->filter('td')->count() != 7)
+                        return false;
+
+                    $tds = $node->filter('td');
+                    $lecture = [
+                        'code' => $tds->eq(0)->text(),
+                        'semester' => $tds->eq(1)->text(),
+                        'subject' => $tds->eq(2)->text(),
+                        'teacher' => $tds->eq(3)->text(),
+                        'year' => $tds->eq(4)->text(),
+                        'form' => $tds->eq(5)->text(),
+                    ];
+                    $tmp = implode(", ", $lecture);
+                    return $tmp . "\n";
+                });
+                // DB::table('lectures')->insert($lectures);
+                // $text = implode("\n", $lectures);
+                file_put_contents('file.txt', $lectures, FILE_APPEND);
+            });
+        });
+        return Command::SUCCESS;
     }
 }
 

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/var/www/html/./app/Console/Commands/ScrapeYamadai_csv.py", line 105, in <module>
+    main()
+  File "/var/www/html/./app/Console/Commands/ScrapeYamadai_csv.py", line 102, in main
+    insert_lectures()
+  File "/var/www/html/./app/Console/Commands/ScrapeYamadai_csv.py", line 44, in insert_lectures
+    time.sleep(WAIT_TIME)
+KeyboardInterrupt

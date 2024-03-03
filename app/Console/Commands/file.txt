@@ -1,0 +1,4 @@
+l,i,s,t,1,1,1,0,.,h,t,m
+18001,屻婜,僉儍儕傾丒僈僀僟儞僗Career-Guidance,恑楬巜摫埾堳夛 媦傃 僉儍儕傾僒億乕僩僙儞僞乕,"2擭,3擭,4擭",島媊
+12401,前期,総合講座ⅡIntroduction to the Public Policy and Social Studies Ⅱ,池田　弘乃(IKEDA Hirono),"1年,2年,3年,4年",講義
+l,i,s,t,1,1,2,0,.,h,t,m
